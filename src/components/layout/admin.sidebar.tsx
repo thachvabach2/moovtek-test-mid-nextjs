@@ -1,20 +1,17 @@
-'use client';
-
+"use client"
+import { AdminContext } from "@/library/admin.context";
 import { AuditOutlined, DollarOutlined, FileTextOutlined, FormOutlined } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineDashboard } from "react-icons/md";
 
 const { Sider } = Layout;
 
-type Props = {
-    collapsed: boolean;
-    setCollapsed: (value: boolean) => void;
-}
-
-const AdminSideBar = ({ collapsed, setCollapsed }: Props) => {
+const AdminSideBar = () => {
     const [activeMenu, setActiveMenu] = useState<string>('dashboard');
+    // const { collapseMenu, setCollapseMenu } = useContext(AdminContext)!;
+    const { collapseMenu, setCollapseMenu } = useContext(AdminContext)!;
 
     const items = [
         {
@@ -72,33 +69,21 @@ const AdminSideBar = ({ collapsed, setCollapsed }: Props) => {
 
     // ];
 
-    const siderStyle = {
-        overflow: 'auto',
-        height: '100vh',
-        position: 'sticky',
-        insetInlineStart: 0,
-        top: 0,
-        bottom: 0,
-        // scrollbarWidth: 'thin',
-        // scrollbarGutter: 'stable',
-    }
-
     const handleLogout = async () => {
 
     }
 
     return (
-        <>
+        <div className="overflow-auto h-screen sticky top-0 bottom-0 start-0"
+        >
             <Sider
                 // trigger={null}
                 theme='light' // default = dark
                 collapsible
-                collapsed={collapsed}
-                onCollapse={(value) => setCollapsed(value)}
-            // style={siderStyle}
+                collapsed={collapseMenu}
+                onCollapse={(value) => setCollapseMenu(value)}
             >
-                <div className='side-bar__header'
-                    style={{ height: 32, margin: 16, textAlign: 'center' }}>
+                <div className='side-bar__header h-[32px] m-[16px] text-center'>
                     Admin
                 </div>
                 <Menu
@@ -108,7 +93,7 @@ const AdminSideBar = ({ collapsed, setCollapsed }: Props) => {
                     onClick={(event) => setActiveMenu(event.key)}
                 />
             </Sider>
-        </>
+        </div>
     )
 }
 

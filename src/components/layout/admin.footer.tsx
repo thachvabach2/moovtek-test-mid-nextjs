@@ -1,11 +1,10 @@
-
-'use client';
+"use client"
 
 const AdminFooter = () => {
     return (
         <>
-            <div className='admin-footer'>
-                Admin &copy; by It Zui Zẻ
+            <div className='h-[50px] leading-[50px] text-center bg-slate-200'>
+                Admin &copy; by Bach Dao
             </div>
         </>
     )
