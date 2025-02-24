@@ -2,19 +2,18 @@
 
 import { AdminContext } from "@/library/admin.context";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Dropdown } from "antd";
+import { Button, Dropdown, Space } from "antd";
+import { useSession } from "next-auth/react";
 import { useContext, useState } from "react";
 
-type Props = {
-    collapsed: boolean;
-    setCollapsed: (value: boolean) => void;
-}
-
 const AdminHeader = () => {
+    const { data: session, status } = useSession()
     const { collapseMenu, setCollapseMenu } = useContext(AdminContext)!;
 
+    console.log('>>>> check data: ', session)
+
     return (
-        <div className='admin-header'>
+        <div className='admin-header flex justify-between'>
             <Button
                 type="text"
                 icon={collapseMenu ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -25,19 +24,13 @@ const AdminHeader = () => {
                     height: 64,
                 }}
             />
-            <Dropdown
+            {/* <Dropdown
                 // menu={{ items: itemsDropdown }} 
-                placement="bottomRight" trigger={['hover']} >
-                <a onClick={(e) => e.preventDefault()}>
-                    {/* <Space>
-                                <Avatar
-                                    src={urlAvatar}
-                                    alt={'avatar'}
-                                />
-                                {user?.fullName}
-                            </Space> */}
-                </a>
-            </Dropdown>
+                placement="bottomRight" trigger={['hover']} > */}
+            <Space>
+                Welcome {session?.user?.email}
+            </Space>
+            {/* </Dropdown> */}
         </div>
     )
 }

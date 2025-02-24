@@ -14,9 +14,7 @@ const AdminLayout = ({
 
     return (
         <AdminContextProvider>
-            <div
-                className='layout-admin min-h-screen flex'
-            >
+            <div className='layout-admin min-h-screen flex' >
                 <div className="left-side">
                     <AdminSideBar />
                 </div>
@@ -27,10 +25,9 @@ const AdminLayout = ({
                     <AdminContent>
                         {children}
                     </AdminContent>
+
                     <AdminFooter />
-
                 </div>
-
             </div>
         </AdminContextProvider>
     )
