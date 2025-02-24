@@ -5,10 +5,21 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Space } from "antd";
 import { useSession } from "next-auth/react";
 import { useContext, useState } from "react";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import ProfileViewDetail from "../admin/profile.view.detail";
 
 const AdminHeader = () => {
     const { data: session, status } = useSession()
     const { collapseMenu, setCollapseMenu } = useContext(AdminContext)!;
+
+    const [openViewDetail, setOpenViewDetail] = useState<boolean>(false)
 
     console.log('>>>> check data: ', session)
 
@@ -24,13 +35,22 @@ const AdminHeader = () => {
                     height: 64,
                 }}
             />
-            {/* <Dropdown
-                // menu={{ items: itemsDropdown }} 
-                placement="bottomRight" trigger={['hover']} > */}
-            <Space>
-                Welcome {session?.user?.email}
-            </Space>
-            {/* </Dropdown> */}
+            <DropdownMenu>
+                <DropdownMenuTrigger> Welcome {session?.user?.email}</DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => setOpenViewDetail(true)} className="cursor-pointer">
+                        Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            <ProfileViewDetail
+                openViewDetail={openViewDetail}
+                setOpenViewDetail={setOpenViewDetail}
+            />
         </div>
     )
 }
