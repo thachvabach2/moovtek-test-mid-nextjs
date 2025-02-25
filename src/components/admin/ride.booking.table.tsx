@@ -6,6 +6,7 @@ import { DeleteTwoTone, EditTwoTone, ExportOutlined, PlusCircleOutlined, ReloadO
 import { Button, Col, Popconfirm, Row, Space, Table } from "antd";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import RideBookingViewDetail from "./ride.booking.view.detail";
 
 interface IProps {
     rideBookings: IRideBooking[];
@@ -22,7 +23,8 @@ const RideBookingTable = (props: IProps) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const [isOpenModalCreate, setIsOpenModalCreate] = useState(false);
+    const [isOpenDrawerViewDetail, setIsOpenDrawerViewDetail] = useState<boolean>(false);
+    const [dataViewDetail, setDataViewDetail] = useState<IRideBooking | null>(null);
 
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -36,8 +38,8 @@ const RideBookingTable = (props: IProps) => {
                 return (
                     <>
                         <a onClick={() => {
-                            // setDataUserViewDetail(record);
-                            // setIsOpenDrawerViewDetail(true);
+                            setDataViewDetail(record);
+                            setIsOpenDrawerViewDetail(true);
                         }}>{value}</a>
                     </>
                 )
@@ -115,11 +117,11 @@ const RideBookingTable = (props: IProps) => {
                 <span>Table List of Ride Booking</span>
                 <span>
                     <Space size="middle">
-                        <Button
+                        {/* <Button
                             icon={<PlusCircleOutlined />}
                             type="primary"
-                        // onClick={() => setIsOpenModalCreate(true)}
-                        >Thêm mới</Button>
+                            onClick={() => setIsOpenModalCreate(true)}
+                        >Thêm mới</Button> */}
 
                         <Button
                             type='text'
@@ -176,14 +178,14 @@ const RideBookingTable = (props: IProps) => {
                     />
                 </Col>
             </Row>
-            {/* <UserDrawerViewDetail
+            <RideBookingViewDetail
                 isOpenDrawerViewDetail={isOpenDrawerViewDetail}
                 setIsOpenDrawerViewDetail={setIsOpenDrawerViewDetail}
-                dataUserViewDetail={dataUserViewDetail}
-                setDataUserViewDetail={setDataUserViewDetail}
+                dataViewDetail={dataViewDetail}
+                setDataViewDetail={setDataViewDetail}
             />
 
-            <UserModalCreate
+            {/* <UserModalCreate
                 isOpenModalCreate={isOpenModalCreate}
                 setIsOpenModalCreate={setIsOpenModalCreate}
                 fetchUsersWithPaginate={fetchUsersWithPaginate}
