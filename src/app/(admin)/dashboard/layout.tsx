@@ -26,7 +26,7 @@ const AdminLayout = ({
                         {children}
                     </AdminContent>
 
-                    <AdminFooter />
+                    {/* <AdminFooter /> */}
                 </div>
             </div>
         </AdminContextProvider>

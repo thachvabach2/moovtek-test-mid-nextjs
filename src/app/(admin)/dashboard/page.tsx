@@ -1,29 +1,38 @@
+import { auth } from "@/auth";
 import RideBookingTable from "@/components/admin/ride.booking.table";
-import { IRideBooking } from "@/types/ride.booking";
-import { Button } from "antd";
 import React from "react";
 
 const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
-const getRideBookings = async () => {
-    const res = await fetch(`${API_URL}/api/rides`);
-    if (!res.ok) {
-        throw new Error("Failed to fetch rides");
-    }
-    return res.json();
+interface IProps {
+    params: { id: string }
+    searchParams: { [key: string]: string | string[] | undefined }
 }
+const DashboardPage = async ({ searchParams }: IProps) => {
+    const params = await searchParams;
+    const current = params?.current ?? 1
+    const pageSize = params?.pageSize ?? 3
+    const session = await auth();
 
-const DashboardPage: React.FC = async () => {
-    const rides: IRideBooking[] = await getRideBookings();
+    const getRideBookings = async () => {
+        const res = await fetch(`${API_URL}/api/rides?current=${current}&pageSize=${pageSize}`, {
+            method: 'GET',
+            headers: {
+                Authentication: `Bearer ${session?.user?.access_token}`
+            },
+            next: {
+                tags: ['list-ride-booking']
+            }
+        });
+
+        console.log('>>>>> check res ride booking: ', res);
+        if (!res.ok) {
+            throw new Error("Failed to fetch rides");
+        }
+        return res.json();
+    }
+
+    const { data: rides, meta } = await getRideBookings();
     console.log('>>>> check length ride: ', rides)
-
-    // hard code
-    const current: number = 1;
-    const pageSize: number = 10;
-    const pages: number = 3;
-    const total: number = 25;
-
-    const meta = { current, pageSize, pages, total };
 
     return (
         <div>

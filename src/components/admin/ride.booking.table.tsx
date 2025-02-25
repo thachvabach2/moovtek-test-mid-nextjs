@@ -4,13 +4,14 @@
 import { IRideBooking } from "@/types/ride.booking";
 import { DeleteTwoTone, EditTwoTone, ExportOutlined, PlusCircleOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Col, Popconfirm, Row, Space, Table } from "antd";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 interface IProps {
     rideBookings: IRideBooking[];
     meta: {
-        current: number;
-        pageSize: number;
+        current: any;
+        pageSize: any;
         pages: number;
         total: number;
     }
@@ -19,13 +20,13 @@ interface IProps {
 const RideBookingTable = (props: IProps) => {
     const { rideBookings, meta } = props;
 
-    // const [listUser, setListUser] = useState<IRideBooking[]>(rideBookings);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [current, setCurrent] = useState<number>(1);
-    const [pageSize, setPageSize] = useState<number>(5);
-    const [total, setTotal] = useState<number>(0);
 
     const [isOpenModalCreate, setIsOpenModalCreate] = useState(false);
+
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
 
     const columns = [
         {
@@ -136,6 +137,22 @@ const RideBookingTable = (props: IProps) => {
         )
     }
 
+    const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
+        if (pagination && pagination.current !== meta.current) {
+            const params = new URLSearchParams(searchParams);
+            params.set('current', pagination.current)
+            replace(`${pathname}?${params.toString()}`)
+        }
+        if (pagination && pagination.pageSize !== meta.pageSize) {
+            const params = new URLSearchParams(searchParams);
+            params.set('current', '1')
+            params.set('pageSize', pagination.pageSize);
+            replace(`${pathname}?${params.toString()}`)
+        }
+
+        console.log("params", pagination, filters, sorter, extra);
+    };
+
     return (
         <>
             <Row gutter={[20, 20]}>
@@ -145,16 +162,16 @@ const RideBookingTable = (props: IProps) => {
                         className='def'
                         columns={columns}
                         dataSource={rideBookings}
-                        // onChange={onChange}
+                        onChange={onChange}
                         rowKey={'_id'}
                         loading={isLoading}
                         pagination={{
-                            current: current,
-                            pageSize: pageSize,
-                            total: total,
+                            current: +meta.current,
+                            pageSize: +meta.pageSize,
+                            total: meta.total,
                             showTotal: (total, range) => { return (<div>{range[0]} - {range[1]} of {total} items</div>) },
                             showSizeChanger: true,
-                            pageSizeOptions: ['5', '10', '20', '50', '100']
+                            pageSizeOptions: ['3', '10', '20', '50', '100']
                         }}
                     />
                 </Col>
