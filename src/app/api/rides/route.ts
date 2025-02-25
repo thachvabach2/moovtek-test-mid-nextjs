@@ -19,13 +19,30 @@ export async function GET(req: Request) {
     const current = parseInt(searchParams.get("current") || "1");
     const pageSize = parseInt(searchParams.get("pageSize") || "3");
 
+    // search
+    const customerName = searchParams.get('customerName')?.toLowerCase();
+    // filter
+    const status = searchParams.get('status');
+
+    let searchedRides = mockRides;
+
+    if (customerName) {
+        searchedRides = searchedRides.filter((ride) =>
+            ride.customerName.toLowerCase().includes(customerName)
+        );
+    }
+
+    if (status) {
+        searchedRides = searchedRides.filter((ride) => ride.status === status);
+    }
+
     // calc pagination
-    const totalItems = mockRides.length;
+    const totalItems = searchedRides.length;
     const totalPages = Math.ceil(totalItems / pageSize);
 
     const startIndex = (current - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    const ridesPag = mockRides.slice(startIndex, endIndex);
+    const ridesPag = searchedRides.slice(startIndex, endIndex);
 
     return NextResponse.json({
         meta: {

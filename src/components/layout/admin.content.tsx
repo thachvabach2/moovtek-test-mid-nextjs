@@ -13,7 +13,7 @@ const AdminContent = ({
     const { data: session, status } = useSession()
     return (
         <>
-            <div>{JSON.stringify(session)}</div>
+            {/* <div>{JSON.stringify(session)}</div> */}
             <Content>
                 <div className="p-3 min-h-[calc(100vh-210px)]">
                     {children}

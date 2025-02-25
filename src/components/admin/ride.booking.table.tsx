@@ -3,12 +3,13 @@
 
 import { IRideBooking } from "@/types/ride.booking";
 import { DeleteTwoTone, EditTwoTone, ExportOutlined, PlusCircleOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Button, Col, Popconfirm, Row, Space, Table } from "antd";
+import { Button, Col, message, notification, Popconfirm, Row, Space, Table } from "antd";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import RideBookingViewDetail from "./ride.booking.view.detail";
 import RideBookingUpdate from "./ride.booking.update";
 import { handleDeleteRideBookingAction } from "@/actions/actions";
+import InputSearch from "./input.search";
 
 interface IProps {
     rideBookings: IRideBooking[];
@@ -52,22 +53,18 @@ const RideBookingTable = (props: IProps) => {
         {
             title: "Customer Name",
             dataIndex: "customerName",
-            sorter: true,
         },
         {
             title: "Pickup Location",
             dataIndex: "pickup",
-            sorter: true,
         },
         {
             title: "Drop-off Location",
             dataIndex: "dropoff",
-            sorter: true,
         },
         {
             title: "Driver Name",
             dataIndex: "driverName",
-            sorter: true,
             render: (value: any, record: any, index: any) => {
                 return (
                     <span>
@@ -79,7 +76,25 @@ const RideBookingTable = (props: IProps) => {
         {
             title: "Ride Status",
             dataIndex: "status",
-            sorter: true,
+            filters: [
+                {
+                    text: 'Pending',
+                    value: 'Pending',
+                },
+                {
+                    text: 'In Progress',
+                    value: 'In Progress',
+                },
+                {
+                    text: 'Completed',
+                    value: 'Completed',
+                },
+                {
+                    text: 'Canceled',
+                    value: 'Canceled',
+                },
+            ],
+            // onFilter: (value: any, record: any) => record.status.indexOf(value as string) === 0,
         },
         {
             title: "Action",
@@ -90,7 +105,16 @@ const RideBookingTable = (props: IProps) => {
                             placement="left"
                             title={'Xác nhận xóa ride booking'}
                             description={"Bạn có chắc chắn muốn xóa ride booking này ?"}
-                            onConfirm={() => handleDeleteRideBookingAction(record._id)}
+                            onConfirm={async () => {
+                                const res = await handleDeleteRideBookingAction(record._id)
+                                if (res && res.message) {
+                                    message.success(res.message);
+                                } else {
+                                    notification.error({
+                                        message: 'Failed Delete'
+                                    })
+                                }
+                            }}
                             okText={'Xác nhận'}
                             cancelText={'Hủy'}
                         >
@@ -123,6 +147,8 @@ const RideBookingTable = (props: IProps) => {
     }
 
     const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
+        console.log("params", pagination, filters, sorter, extra);
+
         if (pagination && pagination.current !== meta.current) {
             const params = new URLSearchParams(searchParams);
             params.set('current', pagination.current)
@@ -134,13 +160,30 @@ const RideBookingTable = (props: IProps) => {
             params.set('pageSize', pagination.pageSize);
             replace(`${pathname}?${params.toString()}`)
         }
-
-        console.log("params", pagination, filters, sorter, extra);
+        if (extra?.action === 'filter') {
+            if (Array.isArray(filters.status) && filters.status.length >= 2) {
+                notification.error({
+                    message: 'Vui lòng chỉ chọn 1 field!'
+                })
+                return;
+            } else {
+                const params = new URLSearchParams(searchParams);
+                if (filters.status === null) {
+                    params.delete('status');
+                } else {
+                    params.set('status', filters?.status[0])
+                }
+                replace(`${pathname}?${params.toString()}`)
+            }
+        }
     };
 
     return (
         <>
             <Row gutter={[20, 20]}>
+                <Col span={24}>
+                    <InputSearch />
+                </Col>
                 <Col span={24}>
                     <Table
                         title={renderHeader}

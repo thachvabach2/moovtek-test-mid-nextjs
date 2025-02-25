@@ -89,7 +89,6 @@ const RideBookingUpdate = (props: IProps) => {
                             <Form.Item
                                 label="Rid ID"
                                 name="_id"
-                                rules={[{ required: true, message: "Vui lòng nhập tên hiển thị!" }]}
                             >
                                 <Input disabled />
                             </Form.Item>
@@ -98,7 +97,7 @@ const RideBookingUpdate = (props: IProps) => {
                             <Form.Item
                                 label="Customer Name"
                                 name="customerName"
-                                rules={[{ required: true, message: "Vui lòng nhập tên hiển thị!" }]}
+                                rules={[{ required: true, message: "Customer Name is required!" }]}
                             >
                                 <Input />
                             </Form.Item>
@@ -107,7 +106,7 @@ const RideBookingUpdate = (props: IProps) => {
                             <Form.Item
                                 label="Driver Name"
                                 name="driverName"
-                                rules={[{ required: true, message: "Vui lòng nhập số điện thoại!" }]}
+                                rules={[{ required: true, message: "Driver Name is required!" }]}
                             >
                                 <Input />
                             </Form.Item>
@@ -116,7 +115,7 @@ const RideBookingUpdate = (props: IProps) => {
                             <Form.Item
                                 label="Pickup Location"
                                 name="pickup"
-                                rules={[{ required: true, message: "Vui lòng nhập email!" }]}
+                                rules={[{ required: true, message: "Pickup Location is required!" }]}
                             >
                                 <Input />
                             </Form.Item>
@@ -125,7 +124,7 @@ const RideBookingUpdate = (props: IProps) => {
                             <Form.Item
                                 label="Drop-off Location"
                                 name="dropoff"
-                                rules={[{ required: true, message: "Vui lòng nhập số điện thoại!" }]}
+                                rules={[{ required: true, message: "Drop-off Location is required!" }]}
                             >
                                 <Input />
                             </Form.Item>
@@ -134,7 +133,7 @@ const RideBookingUpdate = (props: IProps) => {
                             <Form.Item
                                 label="Ride Status"
                                 name="status"
-                                rules={[{ required: true, message: "Vui lòng nhập số điện thoại!" }]}
+                                rules={[{ required: true, message: "Ride Status is required!" }]}
                             >
                                 <Select
                                     showSearch

@@ -41,6 +41,7 @@ export const handleDeleteRideBookingAction = async (_id: string) => {
     })
     if (res.ok) {
         revalidateTag('list-ride-booking');
+        return res.json();
     } else {
         console.log('Failed Delete')
     }

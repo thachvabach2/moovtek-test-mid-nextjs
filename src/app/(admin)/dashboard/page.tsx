@@ -8,21 +8,27 @@ interface IProps {
     searchParams: { [key: string]: string | string[] | undefined }
 }
 const DashboardPage = async ({ searchParams }: IProps) => {
+    const session = await auth();
+
     const params = await searchParams;
     const current = params?.current ?? 1
     const pageSize = params?.pageSize ?? 3
-    const session = await auth();
+
+    const customerName = params?.customerName ?? ''
+    const status = params?.status ?? ''
 
     const getRideBookings = async () => {
-        const res = await fetch(`${API_URL}/api/rides?current=${current}&pageSize=${pageSize}`, {
-            method: 'GET',
-            headers: {
-                Authentication: `Bearer ${session?.user?.access_token}`
-            },
-            next: {
-                tags: ['list-ride-booking']
-            }
-        });
+        const res =
+            await fetch(`${API_URL}/api/rides?current=${current}&pageSize=${pageSize}
+                        &customerName=${customerName}&status=${status}`, {
+                method: 'GET',
+                headers: {
+                    Authentication: `Bearer ${session?.user?.access_token}`
+                },
+                next: {
+                    tags: ['list-ride-booking']
+                }
+            });
         if (!res.ok) {
             throw new Error("Failed to fetch rides");
         }
