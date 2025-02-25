@@ -24,7 +24,7 @@ const DashboardPage = async ({ searchParams }: IProps) => {
             }
         });
 
-        console.log('>>>>> check res ride booking: ', res);
+        // console.log('>>>>> check res ride booking: ', res);
         if (!res.ok) {
             throw new Error("Failed to fetch rides");
         }
@@ -32,7 +32,22 @@ const DashboardPage = async ({ searchParams }: IProps) => {
     }
 
     const { data: rides, meta } = await getRideBookings();
-    console.log('>>>> check length ride: ', rides)
+    // console.log('>>>> check length ride: ', rides)
+
+    // await fetch(`${API_URL}/api/rides`, {
+    //     method: 'PUT',
+    //     headers: {
+    //         Authentication: `Bearer ${session?.user?.access_token}`
+    //     },
+    //     body: JSON.stringify({
+    //         _id: '123',
+    //         customerName: 'Bach Dao',
+    //         pickup: 'hcm',
+    //         dropoff: 'ha loi',
+    //         driverName: 'Thach',
+    //         status: 'Pending',
+    //     })
+    // })
 
     return (
         <div>

@@ -7,4 +7,4 @@ export interface IRideBooking {
     status: StatusType;
 }
 
-type StatusType = 'Pending' | 'In Progress' | 'Completed' | 'Canceled'
+export type StatusType = 'Pending' | 'In Progress' | 'Completed' | 'Canceled'

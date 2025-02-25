@@ -7,6 +7,7 @@ import { Button, Col, Popconfirm, Row, Space, Table } from "antd";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import RideBookingViewDetail from "./ride.booking.view.detail";
+import RideBookingUpdate from "./ride.booking.update";
 
 interface IProps {
     rideBookings: IRideBooking[];
@@ -20,15 +21,17 @@ interface IProps {
 
 const RideBookingTable = (props: IProps) => {
     const { rideBookings, meta } = props;
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [isOpenDrawerViewDetail, setIsOpenDrawerViewDetail] = useState<boolean>(false);
     const [dataViewDetail, setDataViewDetail] = useState<IRideBooking | null>(null);
 
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const { replace } = useRouter();
+    const [isOpenModalUpdate, setIsOpenModalUpdate] = useState<boolean>(false);
+    const [dataUpdate, setDataUpdate] = useState<IRideBooking | null>(null);
 
     const columns = [
         {
@@ -67,8 +70,7 @@ const RideBookingTable = (props: IProps) => {
             render: (value: any, record: any, index: any) => {
                 return (
                     <span>
-                        {/* {moment(record?.updatedAt).format(FOR_DATE_DISPLAY)} */}
-                        12:12:12
+                        {value}
                     </span>
                 )
             }
@@ -100,10 +102,10 @@ const RideBookingTable = (props: IProps) => {
                         <EditTwoTone
                             twoToneColor={'#FFA500'}
                             style={{ cursor: 'pointer' }}
-                        // onClick={() => {
-                        //     setIsOpenModalUpdate(true);
-                        //     setDataUserUpdate(record);
-                        // }}
+                            onClick={() => {
+                                setIsOpenModalUpdate(true);
+                                setDataUpdate(record);
+                            }}
                         />
                     </Space>
                 </>
@@ -185,19 +187,15 @@ const RideBookingTable = (props: IProps) => {
                 setDataViewDetail={setDataViewDetail}
             />
 
-            {/* <UserModalCreate
-                isOpenModalCreate={isOpenModalCreate}
-                setIsOpenModalCreate={setIsOpenModalCreate}
-                fetchUsersWithPaginate={fetchUsersWithPaginate}
-            />
-
-            <UserModalUpdate
+            <RideBookingUpdate
                 isOpenModalUpdate={isOpenModalUpdate}
                 setIsOpenModalUpdate={setIsOpenModalUpdate}
-                dataUserUpdate={dataUserUpdate}
-                setDataUserUpdate={setDataUserUpdate}
-                fetchUsersWithPaginate={fetchUsersWithPaginate}
-            /> */}
+                dataUpdate={dataUpdate}
+                setDataUpdate={setDataUpdate}
+            // dataUserUpdate={dataUserUpdate}
+            // setDataUserUpdate={setDataUserUpdate}
+            // fetchUsersWithPaginate={fetchUsersWithPaginate}
+            />
         </>
     )
 }

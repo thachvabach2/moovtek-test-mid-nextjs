@@ -38,3 +38,19 @@ export async function GET(req: Request) {
         data: ridesPag,
     })
 }
+
+export async function PUT(req: Request) {
+    const { _id, customerName, pickup, dropoff, driverName, status } = await req.json();
+
+    const rideIndex = mockRides.findIndex((ride) => ride._id === _id);
+    if (rideIndex === -1) {
+        return NextResponse.json({ error: "Ride not found" }, { status: 404 });
+    }
+
+    mockRides[rideIndex] = { _id, customerName, pickup, dropoff, driverName, status };
+
+    return NextResponse.json({
+        message: "Ride updated successfully",
+        data: mockRides[rideIndex]
+    });
+}
