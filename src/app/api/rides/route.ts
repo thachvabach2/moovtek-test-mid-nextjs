@@ -14,7 +14,6 @@ const mockRides: IRideBooking[] = [
     { _id: '10', customerName: "Fiona Red", pickup: "777 Cedar St", dropoff: "888 Birch St", driverName: "Zendaya", status: "Completed" },
 ];
 
-// Handle GET request
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const current = parseInt(searchParams.get("current") || "1");
@@ -52,5 +51,24 @@ export async function PUT(req: Request) {
     return NextResponse.json({
         message: "Ride updated successfully",
         data: mockRides[rideIndex]
+    });
+}
+
+export async function DELETE(req: Request) {
+    const { _id } = await req.json();
+
+    const rideIndex = mockRides.findIndex((ride) => ride._id === _id);
+
+    if (rideIndex === -1) {
+        return NextResponse.json({
+            status: 404,
+            error: "Ride not found",
+        });
+    }
+
+    mockRides.splice(rideIndex, 1);
+
+    return NextResponse.json({
+        message: `Ride with ID ${_id} deleted successfully`
     });
 }

@@ -26,6 +26,22 @@ export const handleUpdateRideBookingAction = async (data: IRideBooking) => {
         revalidateTag('list-ride-booking');
         return res.json();
     } else {
-        alert("Failed to update ride");
+        console.log("Failed to update ride");
+    }
+}
+
+export const handleDeleteRideBookingAction = async (_id: string) => {
+    const session = await auth();
+    const res = await fetch(`${API_URL}/api/rides`, {
+        method: 'DELETE',
+        headers: {
+            Authentication: `Bearer ${session?.user?.access_token}`
+        },
+        body: JSON.stringify({ _id })
+    })
+    if (res.ok) {
+        revalidateTag('list-ride-booking');
+    } else {
+        console.log('Failed Delete')
     }
 }

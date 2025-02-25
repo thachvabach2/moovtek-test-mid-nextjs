@@ -8,6 +8,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import RideBookingViewDetail from "./ride.booking.view.detail";
 import RideBookingUpdate from "./ride.booking.update";
+import { handleDeleteRideBookingAction } from "@/actions/actions";
 
 interface IProps {
     rideBookings: IRideBooking[];
@@ -89,7 +90,7 @@ const RideBookingTable = (props: IProps) => {
                             placement="left"
                             title={'Xác nhận xóa ride booking'}
                             description={"Bạn có chắc chắn muốn xóa ride booking này ?"}
-                            // onConfirm={() => handleDeleteUser(record._id)}
+                            onConfirm={() => handleDeleteRideBookingAction(record._id)}
                             okText={'Xác nhận'}
                             cancelText={'Hủy'}
                         >
@@ -117,26 +118,6 @@ const RideBookingTable = (props: IProps) => {
         return (
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span>Table List of Ride Booking</span>
-                <span>
-                    <Space size="middle">
-                        {/* <Button
-                            icon={<PlusCircleOutlined />}
-                            type="primary"
-                            onClick={() => setIsOpenModalCreate(true)}
-                        >Thêm mới</Button> */}
-
-                        <Button
-                            type='text'
-                        // onClick={() => {
-                        //     setFilter('');
-                        //     setSortQuery('');
-                        //     setCurrent(1);
-                        // }}
-                        >
-                            <ReloadOutlined />
-                        </Button>
-                    </Space>
-                </span>
             </div>
         )
     }
@@ -192,9 +173,6 @@ const RideBookingTable = (props: IProps) => {
                 setIsOpenModalUpdate={setIsOpenModalUpdate}
                 dataUpdate={dataUpdate}
                 setDataUpdate={setDataUpdate}
-            // dataUserUpdate={dataUserUpdate}
-            // setDataUserUpdate={setDataUserUpdate}
-            // fetchUsersWithPaginate={fetchUsersWithPaginate}
             />
         </>
     )
