@@ -1,32 +1,6 @@
 import { IDriver } from "@/types/driver";
 import { NextResponse } from "next/server";
 
-// const mockDrivers = [
-//     {
-//         _id: '1',
-//         fullName: "Michael Johnson",
-//         contactInfo: {
-//             phone: "+1 234 567 890",
-//             email: "michael.johnson@example.com"
-//         },
-//         vehicle: {
-//             _id: '1',
-//             company: "Toyota",
-//             model: "Camry",
-//             year: 2020,
-//             plateNumber: "ABC-1234"
-//         },
-//         completedRides: 150,
-//         rating: 4.8,
-//         reviews: [
-//             { _id: '1', reviewer: "John Doe", comment: "Great ride, very professional!", rating: 5 },
-//             { _id: '2', reviewer: "Jane Smith", comment: "Smooth driving, highly recommend.", rating: 4.7 }
-//         ],
-//         createdAt: '26 Feb, 2025',
-//         updatedAt: '26 Feb, 2025',
-//     },
-// ]
-
 const mockDrivers: IDriver[] = [
     {
         _id: "1",
