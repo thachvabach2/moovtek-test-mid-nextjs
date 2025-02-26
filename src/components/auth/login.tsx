@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Divider, Form, Input, notification, Row } from 'antd';
 import '@ant-design/v5-patch-for-react-19';
 import Link from 'next/link';
@@ -14,8 +14,11 @@ const Login = () => {
     const { update } = useSession();
     const router = useRouter();
 
+    const [isSubmit, setIsSubmit] = useState<boolean>(false);
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onFinish = async (values: any) => {
+        setIsSubmit(true);
         console.log('>>>> On finish form:', values);
         const { email, password } = values;
 
@@ -33,6 +36,7 @@ const Login = () => {
             await update();
             router.push('/dashboard');
         }
+        setIsSubmit(false)
 
         // const data = await signIn("credentials", { email, password, redirect: false })
         // console.log('>>>> checkdata: ', data)
@@ -77,7 +81,7 @@ const Login = () => {
 
                         <Form.Item
                         >
-                            <Button type="primary" htmlType="submit">
+                            <Button type="primary" htmlType="submit" loading={isSubmit}>
                                 Login
                             </Button>
                         </Form.Item>
