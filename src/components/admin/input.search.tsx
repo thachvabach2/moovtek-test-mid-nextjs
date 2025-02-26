@@ -17,6 +17,7 @@ const InputSearch = () => {
         // margin: 15,
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onFinish = (values: any) => {
         if (values.customerName) {
             const params = new URLSearchParams(searchParams);

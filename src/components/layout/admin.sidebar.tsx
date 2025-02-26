@@ -12,7 +12,7 @@ const { Sider } = Layout;
 const AdminSideBar = () => {
     const [activeMenu, setActiveMenu] = useState<string>('dashboard');
     const { collapseMenu, setCollapseMenu } = useContext(AdminContext)!;
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
 
     let items = [
         {

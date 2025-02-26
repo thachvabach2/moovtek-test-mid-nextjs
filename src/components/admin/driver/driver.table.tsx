@@ -1,4 +1,4 @@
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { IDriver } from "@/types/driver";
 import { Col, Row, Table } from "antd";
@@ -9,8 +9,8 @@ import DriverViewDetail from "./driver.view.detail";
 interface IProps {
     listDriver: IDriver[];
     meta: {
-        current: any;
-        pageSize: any;
+        current: string | number;
+        pageSize: string | number;
         pages: number;
         total: number;
     }
@@ -22,8 +22,6 @@ const DriverTable = (props: IProps) => {
     const pathname = usePathname();
     const { replace } = useRouter();
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
     const [isOpenDrawerViewDetail, setIsOpenDrawerViewDetail] = useState<boolean>(false);
     const [dataViewDetail, setDataViewDetail] = useState<IDriver | null>(null);
 
@@ -32,7 +30,7 @@ const DriverTable = (props: IProps) => {
         {
             title: "ID",
             dataIndex: "_id",
-            render: (value: any, record: any, index: any) => {
+            render: (value: any, record: any) => {
                 return (
                     <>
                         <a onClick={() => {
@@ -96,7 +94,6 @@ const DriverTable = (props: IProps) => {
                         dataSource={listDriver}
                         onChange={onChange}
                         rowKey={'_id'}
-                        loading={isLoading}
                         pagination={{
                             current: +meta.current,
                             pageSize: +meta.pageSize,
@@ -114,20 +111,6 @@ const DriverTable = (props: IProps) => {
                 dataViewDetail={dataViewDetail}
                 setDataViewDetail={setDataViewDetail}
             />
-
-            {/* <RideBookingViewDetail
-                isOpenDrawerViewDetail={isOpenDrawerViewDetail}
-                setIsOpenDrawerViewDetail={setIsOpenDrawerViewDetail}
-                dataViewDetail={dataViewDetail}
-                setDataViewDetail={setDataViewDetail}
-            />
-
-            <RideBookingUpdate
-                isOpenModalUpdate={isOpenModalUpdate}
-                setIsOpenModalUpdate={setIsOpenModalUpdate}
-                dataUpdate={dataUpdate}
-                setDataUpdate={setDataUpdate}
-            /> */}
         </>
     )
 }

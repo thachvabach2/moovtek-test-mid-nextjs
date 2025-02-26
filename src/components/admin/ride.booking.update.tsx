@@ -16,7 +16,7 @@ const RideBookingUpdate = (props: IProps) => {
 
     const [form] = Form.useForm();
     const [isSubmit, setIsSubmit] = useState<boolean>(false);
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
 
 
     const statusOptions = [
@@ -40,6 +40,7 @@ const RideBookingUpdate = (props: IProps) => {
         }
     }, [dataUpdate])
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onFinish = async (values: any) => {
         setIsSubmit(true);
 

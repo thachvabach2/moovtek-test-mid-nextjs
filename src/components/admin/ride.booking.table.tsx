@@ -3,7 +3,7 @@
 
 import { IRideBooking } from "@/types/ride.booking";
 import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
-import { Col, message, notification, Popconfirm, Row, Space, Table } from "antd";
+import { Col, message, notification, Popconfirm, Row, Space, Table, TableProps } from "antd";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import RideBookingViewDetail from "./ride.booking.view.detail";
@@ -15,8 +15,8 @@ import { useSession } from "next-auth/react";
 interface IProps {
     rideBookings: IRideBooking[];
     meta: {
-        current: any;
-        pageSize: any;
+        current: string | number;
+        pageSize: string | number;
         pages: number;
         total: number;
     }
@@ -28,21 +28,20 @@ const RideBookingTable = (props: IProps) => {
     const pathname = usePathname();
     const { replace } = useRouter();
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
     const [isOpenDrawerViewDetail, setIsOpenDrawerViewDetail] = useState<boolean>(false);
     const [dataViewDetail, setDataViewDetail] = useState<IRideBooking | null>(null);
 
     const [isOpenModalUpdate, setIsOpenModalUpdate] = useState<boolean>(false);
     const [dataUpdate, setDataUpdate] = useState<IRideBooking | null>(null);
 
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
 
-    let columns: any = [
+    let columns: TableProps['columns'] = [
         {
             title: "Ride ID",
             dataIndex: "_id",
-            render: (value: any, record: any, index: any) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            render: (value: any, record: any) => {
                 return (
                     <>
                         <a onClick={() => {
@@ -68,7 +67,8 @@ const RideBookingTable = (props: IProps) => {
         {
             title: "Driver Name",
             dataIndex: "driverName",
-            render: (value: any, record: any, index: any) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            render: (value: any) => {
                 return (
                     <span>
                         {value}
@@ -101,9 +101,10 @@ const RideBookingTable = (props: IProps) => {
         },
     ];
 
-    const columsActionAdmin = {
+    const columsActionAdmin: TableProps['columns'] = [{
         title: "Action",
-        render: (value: any, record: any, index: any) => (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        render: (record: any) => (
             <>
                 <Space size={'large'}>
                     <Popconfirm
@@ -140,10 +141,11 @@ const RideBookingTable = (props: IProps) => {
                 </Space>
             </>
         )
-    }
-    const columnsActionsOperator = {
+    }]
+    const columnsActionsOperator: TableProps['columns'] = [{
         title: "Action",
-        render: (value: any, record: any, index: any) => (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        render: (record: any) => (
             <>
                 <Space size={'large'}>
                     <EditTwoTone
@@ -157,12 +159,12 @@ const RideBookingTable = (props: IProps) => {
                 </Space>
             </>
         )
-    }
+    }]
 
-    session?.user?.role === 'ADMIN' ?
-        columns = [...columns, columsActionAdmin]
-        :
-        columns = [...columns, columnsActionsOperator]
+    if (session?.user?.role === 'ADMIN')
+        columns = [...columns, ...columsActionAdmin]
+    else
+        columns = [...columns, ...columnsActionsOperator]
 
     const renderHeader = () => {
         return (
@@ -172,6 +174,7 @@ const RideBookingTable = (props: IProps) => {
         )
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
         console.log("params", pagination, filters, sorter, extra);
 
@@ -218,7 +221,6 @@ const RideBookingTable = (props: IProps) => {
                         dataSource={rideBookings}
                         onChange={onChange}
                         rowKey={'_id'}
-                        loading={isLoading}
                         pagination={{
                             current: +meta.current,
                             pageSize: +meta.pageSize,

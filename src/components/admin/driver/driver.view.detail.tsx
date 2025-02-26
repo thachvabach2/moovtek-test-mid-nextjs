@@ -27,7 +27,8 @@ const DriverViewDetail = (props: IProps) => {
         {
             title: "ID",
             dataIndex: "_id",
-            render: (value: any, record: any, index: any) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            render: (value: any) => {
                 return (
                     <>
                         {value}
@@ -46,7 +47,8 @@ const DriverViewDetail = (props: IProps) => {
         {
             title: "Rating",
             dataIndex: 'rating',
-            render: (value: any, record: any, index: any) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            render: (value: any) => {
                 return (
                     <>
                         <StarFilled style={{ color: '#FFA500' }} /> {value}

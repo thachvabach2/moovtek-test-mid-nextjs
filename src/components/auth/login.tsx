@@ -11,9 +11,10 @@ import { useRouter } from 'next/navigation';
 
 
 const Login = () => {
-    const { data: session, update } = useSession();
+    const { update } = useSession();
     const router = useRouter();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onFinish = async (values: any) => {
         console.log('>>>> On finish form:', values);
         const { email, password } = values;

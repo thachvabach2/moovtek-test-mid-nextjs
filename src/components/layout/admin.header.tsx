@@ -2,7 +2,7 @@
 
 import { AdminContext } from "@/library/admin.context";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Space } from "antd";
+import { Button } from "antd";
 import { signOut, useSession } from "next-auth/react";
 import { useContext, useState } from "react";
 import {
@@ -17,7 +17,7 @@ import ProfileViewDetail from "../admin/profile.view.detail";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 const AdminHeader = () => {
-    const { data: session, status } = useSession()
+    const { data: session } = useSession()
     const { collapseMenu, setCollapseMenu } = useContext(AdminContext)!;
 
     const [openViewDetail, setOpenViewDetail] = useState<boolean>(false)

@@ -9,7 +9,7 @@ type ViewDetailProps = {
 }
 
 const ProfileViewDetail = ({ openViewDetail, setOpenViewDetail }: ViewDetailProps) => {
-    const { data: session, status } = useSession()
+    const { data: session } = useSession()
 
     return (
         <>

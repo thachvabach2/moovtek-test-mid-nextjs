@@ -3,8 +3,8 @@ import DriverTable from "@/components/admin/driver/driver.table";
 
 const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 interface IProps {
-    params: { id: string }
-    searchParams: { [key: string]: string | string[] | undefined }
+    params: Promise<{ id: string }>
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
 const DriverManagementPage = async ({ searchParams }: IProps) => {

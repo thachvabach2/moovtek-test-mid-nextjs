@@ -217,7 +217,7 @@ export async function GET(req: Request) {
     const current = parseInt(searchParams.get("current") || "1");
     const pageSize = parseInt(searchParams.get("pageSize") || "3");
 
-    let searchedDrivers = mockDrivers;
+    const searchedDrivers = mockDrivers;
 
     // calc pagination
     const totalItems = searchedDrivers.length;

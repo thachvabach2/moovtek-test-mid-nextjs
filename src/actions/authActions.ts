@@ -11,13 +11,17 @@ export async function authenticate(email: string, password: string) {
             redirect: false,
         })
         return r;
-    } catch (error) {
-        if ((error as any).name === 'InvalidEmailPasswordError') {
-            return {
-                error: (error as any).type,
-                code: 400,
+    } catch (error: unknown) {
+        console.log('>>>> check error: ', error)
+        if (error instanceof Error) {
+            if (error.name === 'InvalidEmailPasswordError') {
+                return {
+                    error: error.message,
+                    code: 400,
+                }
             }
-        } else {
+        }
+        else {
             return {
                 error: 'Internal Server Error',
                 code: 500,
