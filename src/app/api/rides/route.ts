@@ -1,3 +1,4 @@
+import { auth } from '@/auth';
 import { IRideBooking } from '@/types/ride.booking';
 import { NextResponse } from 'next/server';
 
@@ -56,14 +57,20 @@ export async function GET(req: Request) {
 }
 
 export async function PUT(req: Request) {
-    const { _id, customerName, pickup, dropoff, driverName, status } = await req.json();
+    const { _id, ...updatedFields } = await req.json();
 
     const rideIndex = mockRides.findIndex((ride) => ride._id === _id);
     if (rideIndex === -1) {
         return NextResponse.json({ error: "Ride not found" }, { status: 404 });
     }
 
-    mockRides[rideIndex] = { _id, customerName, pickup, dropoff, driverName, status };
+    // mockRides[rideIndex] = { _id, customerName, pickup, dropoff, driverName, status };
+    // const temp = mockRides[rideIndex]
+
+    mockRides[rideIndex] = {
+        ...mockRides[rideIndex],
+        ...updatedFields,
+    };
 
     return NextResponse.json({
         message: "Ride updated successfully",

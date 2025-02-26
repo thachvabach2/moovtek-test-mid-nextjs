@@ -10,6 +10,7 @@ import RideBookingViewDetail from "./ride.booking.view.detail";
 import RideBookingUpdate from "./ride.booking.update";
 import { handleDeleteRideBookingAction } from "@/actions/actions";
 import InputSearch from "./input.search";
+import { useSession } from "next-auth/react";
 
 interface IProps {
     rideBookings: IRideBooking[];
@@ -35,7 +36,9 @@ const RideBookingTable = (props: IProps) => {
     const [isOpenModalUpdate, setIsOpenModalUpdate] = useState<boolean>(false);
     const [dataUpdate, setDataUpdate] = useState<IRideBooking | null>(null);
 
-    const columns = [
+    const { data: session, status } = useSession();
+
+    let columns: any = [
         {
             title: "Ride ID",
             dataIndex: "_id",
@@ -96,47 +99,70 @@ const RideBookingTable = (props: IProps) => {
             ],
             // onFilter: (value: any, record: any) => record.status.indexOf(value as string) === 0,
         },
-        {
-            title: "Action",
-            render: (value: any, record: any, index: any) => (
-                <>
-                    <Space size={'large'}>
-                        <Popconfirm
-                            placement="left"
-                            title={'Xác nhận xóa ride booking'}
-                            description={"Bạn có chắc chắn muốn xóa ride booking này ?"}
-                            onConfirm={async () => {
-                                const res = await handleDeleteRideBookingAction(record._id)
-                                if (res && res.message) {
-                                    message.success(res.message);
-                                } else {
-                                    notification.error({
-                                        message: 'Failed Delete'
-                                    })
-                                }
-                            }}
-                            okText={'Xác nhận'}
-                            cancelText={'Hủy'}
-                        >
-                            <DeleteTwoTone
-                                twoToneColor={'#FF0000'}
-                                style={{ cursor: 'pointer' }}
-                            />
-                        </Popconfirm>
-
-                        <EditTwoTone
-                            twoToneColor={'#FFA500'}
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => {
-                                setIsOpenModalUpdate(true);
-                                setDataUpdate(record);
-                            }}
-                        />
-                    </Space>
-                </>
-            )
-        },
     ];
+
+    const columsActionAdmin = {
+        title: "Action",
+        render: (value: any, record: any, index: any) => (
+            <>
+                <Space size={'large'}>
+                    <Popconfirm
+                        placement="left"
+                        title={'Xác nhận xóa ride booking'}
+                        description={"Bạn có chắc chắn muốn xóa ride booking này ?"}
+                        onConfirm={async () => {
+                            const res = await handleDeleteRideBookingAction(record._id)
+                            if (res && res.message) {
+                                message.success(res.message);
+                            } else {
+                                notification.error({
+                                    message: 'Failed Delete'
+                                })
+                            }
+                        }}
+                        okText={'Xác nhận'}
+                        cancelText={'Hủy'}
+                    >
+                        <DeleteTwoTone
+                            twoToneColor={'#FF0000'}
+                            style={{ cursor: 'pointer' }}
+                        />
+                    </Popconfirm>
+
+                    <EditTwoTone
+                        twoToneColor={'#FFA500'}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => {
+                            setIsOpenModalUpdate(true);
+                            setDataUpdate(record);
+                        }}
+                    />
+                </Space>
+            </>
+        )
+    }
+    const columnsActionsOperator = {
+        title: "Action",
+        render: (value: any, record: any, index: any) => (
+            <>
+                <Space size={'large'}>
+                    <EditTwoTone
+                        twoToneColor={'#FFA500'}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => {
+                            setIsOpenModalUpdate(true);
+                            setDataUpdate(record);
+                        }}
+                    />
+                </Space>
+            </>
+        )
+    }
+
+    session?.user?.role === 'ADMIN' ?
+        columns = [...columns, columsActionAdmin]
+        :
+        columns = [...columns, columnsActionsOperator]
 
     const renderHeader = () => {
         return (

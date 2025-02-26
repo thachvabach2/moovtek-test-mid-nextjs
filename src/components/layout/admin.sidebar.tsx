@@ -1,7 +1,10 @@
 "use client"
+import { auth } from "@/auth";
 import { AdminContext } from "@/library/admin.context";
 import { AuditOutlined, DollarOutlined, FileTextOutlined, FormOutlined } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useContext, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineDashboard } from "react-icons/md";
@@ -10,43 +13,24 @@ const { Sider } = Layout;
 
 const AdminSideBar = () => {
     const [activeMenu, setActiveMenu] = useState<string>('dashboard');
-    // const { collapseMenu, setCollapseMenu } = useContext(AdminContext)!;
     const { collapseMenu, setCollapseMenu } = useContext(AdminContext)!;
+    const { data: session, status } = useSession();
 
-    const items = [
+    let items = [
         {
-            label: 'Dashboard',
+            label: <Link href={'/dashboard'}>Dashboard</Link>,
             key: 'dashboard',
             icon: <MdOutlineDashboard />,
         },
-        {
-            label: 'Booking Management',
-            key: 'user',
-            icon: <FaRegUser />,
-            children: [
-                {
-                    label: 'CRUD',
-                    key: 'crud',
-                    icon: <FormOutlined />,
-                },
-                {
-                    label: 'Files1',
-                    key: 'file1',
-                    icon: <FileTextOutlined />,
-                }
-            ]
-        },
-        {
-            label: 'Driver Management',
-            key: 'book',
-            icon: <AuditOutlined />,
-        },
-        {
-            label: 'Manage Orders',
-            key: 'order',
-            icon: <DollarOutlined />,
-        },
     ]
+
+    const itemsAdmin = {
+        label: <Link href={'/driver'}>Driver Management</Link>,
+        key: 'driver-management',
+        icon: <AuditOutlined />,
+    }
+
+    if (session?.user?.role === 'ADMIN') items = [...items, itemsAdmin]
 
     // const itemsDropdown = [
     //     {

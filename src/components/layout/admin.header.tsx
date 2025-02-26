@@ -3,7 +3,7 @@
 import { AdminContext } from "@/library/admin.context";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Space } from "antd";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useContext, useState } from "react";
 import {
     DropdownMenu,
@@ -14,6 +14,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import ProfileViewDetail from "../admin/profile.view.detail";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 const AdminHeader = () => {
     const { data: session, status } = useSession()
@@ -36,14 +37,14 @@ const AdminHeader = () => {
                 }}
             />
             <DropdownMenu>
-                <DropdownMenuTrigger> Welcome {session?.user?.email}</DropdownMenuTrigger>
+                <DropdownMenuTrigger> <div className="text-blue-600 flex items-center m-3">Welcome {session?.user?.name} <IoMdArrowDropdown /></div></DropdownMenuTrigger>
                 <DropdownMenuContent>
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={() => setOpenViewDetail(true)} className="cursor-pointer">
                         Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
 

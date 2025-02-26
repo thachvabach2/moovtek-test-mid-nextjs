@@ -1,6 +1,7 @@
 import { handleUpdateRideBookingAction } from "@/actions/actions";
 import { IRideBooking, StatusType } from "@/types/ride.booking";
 import { Col, Divider, Form, Input, message, Modal, notification, Row, Select } from "antd";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 interface IProps {
@@ -15,6 +16,9 @@ const RideBookingUpdate = (props: IProps) => {
 
     const [form] = Form.useForm();
     const [isSubmit, setIsSubmit] = useState<boolean>(false);
+    const { data: session, status } = useSession();
+
+
     const statusOptions = [
         {
             value: 'Pending'
@@ -85,50 +89,54 @@ const RideBookingUpdate = (props: IProps) => {
                     autoComplete="off"
                 >
                     <Row gutter={[20, 20]}>
-                        <Col span={24}>
-                            <Form.Item
-                                label="Rid ID"
-                                name="_id"
-                            >
-                                <Input disabled />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                label="Customer Name"
-                                name="customerName"
-                                rules={[{ required: true, message: "Customer Name is required!" }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                label="Driver Name"
-                                name="driverName"
-                                rules={[{ required: true, message: "Driver Name is required!" }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col span={8}>
-                            <Form.Item
-                                label="Pickup Location"
-                                name="pickup"
-                                rules={[{ required: true, message: "Pickup Location is required!" }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col span={8}>
-                            <Form.Item
-                                label="Drop-off Location"
-                                name="dropoff"
-                                rules={[{ required: true, message: "Drop-off Location is required!" }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
+                        {session?.user?.role === 'ADMIN' &&
+                            <>
+                                <Col span={24}>
+                                    <Form.Item
+                                        label="Rid ID"
+                                        name="_id"
+                                    >
+                                        <Input disabled />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={12}>
+                                    <Form.Item
+                                        label="Customer Name"
+                                        name="customerName"
+                                        rules={[{ required: true, message: "Customer Name is required!" }]}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={12}>
+                                    <Form.Item
+                                        label="Driver Name"
+                                        name="driverName"
+                                        rules={[{ required: true, message: "Driver Name is required!" }]}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={8}>
+                                    <Form.Item
+                                        label="Pickup Location"
+                                        name="pickup"
+                                        rules={[{ required: true, message: "Pickup Location is required!" }]}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={8}>
+                                    <Form.Item
+                                        label="Drop-off Location"
+                                        name="dropoff"
+                                        rules={[{ required: true, message: "Drop-off Location is required!" }]}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                            </>
+                        }
                         <Col span={8}>
                             <Form.Item
                                 label="Ride Status"
