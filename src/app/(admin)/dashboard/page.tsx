@@ -25,6 +25,7 @@ const DashboardPage = async ({ searchParams }: IProps) => {
                 headers: {
                     Authentication: `Bearer ${session?.user?.access_token}`
                 },
+                cache: 'force-cache',
                 next: {
                     tags: ['list-ride-booking']
                 }
