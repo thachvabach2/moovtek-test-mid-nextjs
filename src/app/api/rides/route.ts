@@ -1,4 +1,3 @@
-import { auth } from '@/auth';
 import { IRideBooking } from '@/types/ride.booking';
 import { NextResponse } from 'next/server';
 

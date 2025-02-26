@@ -1,12 +1,11 @@
 'use client';
 
 import React from 'react';
-import type { FormProps } from 'antd';
-import { Button, Checkbox, Col, Divider, Form, Input, notification, Row } from 'antd';
+import { Button, Col, Divider, Form, Input, notification, Row } from 'antd';
 import '@ant-design/v5-patch-for-react-19';
 import Link from 'next/link';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { signIn, useSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import { authenticate } from '@/actions/authActions';
 import { useRouter } from 'next/navigation';
 
@@ -30,7 +29,6 @@ const Login = () => {
                 description: res?.error,
             })
         } else {
-            // redirect to dashboard
             await update();
             router.push('/dashboard');
         }

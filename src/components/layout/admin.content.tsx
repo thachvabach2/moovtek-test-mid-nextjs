@@ -15,7 +15,7 @@ const AdminContent = ({
         <>
             {/* <div>{JSON.stringify(session)}</div> */}
             <Content>
-                <div className="p-3 min-h-[calc(100vh-210px)]">
+                <div className="p-3 min-h-[calc(100vh-114px)]">
                     {children}
                 </div>
             </Content>

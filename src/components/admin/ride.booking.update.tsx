@@ -1,5 +1,5 @@
 import { handleUpdateRideBookingAction } from "@/actions/actions";
-import { IRideBooking, StatusType } from "@/types/ride.booking";
+import { IRideBooking } from "@/types/ride.booking";
 import { Col, Divider, Form, Input, message, Modal, notification, Row, Select } from "antd";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";

@@ -2,7 +2,6 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { InvalidEmailPasswordError } from "./utils/error"
 import { IUser } from "./types/next-auth"
-import { error } from "console"
 import { v4 as uuidv4 } from 'uuid';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({

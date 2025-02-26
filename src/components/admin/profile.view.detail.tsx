@@ -1,8 +1,7 @@
 'use client'
 
-import { Badge, Descriptions, Divider, Drawer, Modal, Upload } from 'antd';
+import { Badge, Descriptions, Drawer } from 'antd';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
 
 type ViewDetailProps = {
     openViewDetail: boolean;

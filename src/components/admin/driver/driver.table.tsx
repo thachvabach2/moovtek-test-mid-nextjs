@@ -1,8 +1,7 @@
 
 'use client'
 import { IDriver } from "@/types/driver";
-import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
-import { Col, Popconfirm, Row, Space, Table } from "antd";
+import { Col, Row, Table } from "antd";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import DriverViewDetail from "./driver.view.detail";

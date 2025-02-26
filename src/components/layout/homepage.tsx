@@ -1,8 +1,6 @@
 import { SmileOutlined } from "@ant-design/icons";
 import { Button, Result } from "antd";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-
 
 const HomePage = () => {
     return (

@@ -1,12 +1,10 @@
 "use client"
-import { auth } from "@/auth";
 import { AdminContext } from "@/library/admin.context";
-import { AuditOutlined, DollarOutlined, FileTextOutlined, FormOutlined } from "@ant-design/icons";
+import { AuditOutlined } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useContext, useState } from "react";
-import { FaRegUser } from "react-icons/fa";
 import { MdOutlineDashboard } from "react-icons/md";
 
 const { Sider } = Layout;
@@ -31,31 +29,6 @@ const AdminSideBar = () => {
     }
 
     if (session?.user?.role === 'ADMIN') items = [...items, itemsAdmin]
-
-    // const itemsDropdown = [
-    //     {
-    //         label: <label style={{ cursor: 'pointer' }}>Quản lý tài khoản</label>,
-    //         key: 'account',
-    //     },
-    //     {
-    //         label: <Link to='/'>Trang chủ</Link>,
-    //         key: 'home',
-    //     },
-    //     {
-    //         label: <label
-    //             style={{ cursor: 'pointer' }}
-    //             onClick={() => handleLogout()}
-    //         >
-    //             Đăng xuất
-    //         </label>,
-    //         key: 'logout',
-    //     },
-
-    // ];
-
-    const handleLogout = async () => {
-
-    }
 
     return (
         <div className="overflow-auto h-screen sticky top-0 bottom-0 start-0"
