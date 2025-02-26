@@ -15,7 +15,7 @@ const mockRides: IRideBooking[] = [
 ];
 
 export async function GET(req: Request) {
-    const { searchParams } = new URL(req.url);
+    const { searchParams } = await new URL(req.url);
     const current = parseInt(searchParams.get("current") || "1");
     const pageSize = parseInt(searchParams.get("pageSize") || "3");
 

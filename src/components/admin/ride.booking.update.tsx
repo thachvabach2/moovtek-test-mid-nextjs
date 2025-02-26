@@ -38,7 +38,7 @@ const RideBookingUpdate = (props: IProps) => {
         if (dataUpdate) {
             form.setFieldsValue(dataUpdate);
         }
-    }, [dataUpdate])
+    }, [dataUpdate, form])
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onFinish = async (values: any) => {
