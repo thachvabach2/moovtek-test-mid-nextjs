@@ -26,7 +26,7 @@ const Login = () => {
         const res = await authenticate(email, password);
         console.log('>>> check res: ', res)
 
-        if (res?.error) {
+        if (res?.error || !res) {
             // login fail
             notification.error({
                 message: 'Error login',
