@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button, Col, Divider, Form, Input, notification, Row } from 'antd';
+import { Button, Col, Divider, Form, Input, message, notification, Row } from 'antd';
 import '@ant-design/v5-patch-for-react-19';
 import Link from 'next/link';
 import { ArrowLeftOutlined } from '@ant-design/icons';
@@ -33,8 +33,9 @@ const Login = () => {
                 description: res?.error,
             })
         } else {
-            await update();
             router.push('/dashboard');
+            await update();
+            message.success('Login success')
         }
         setIsSubmit(false)
 

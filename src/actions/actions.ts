@@ -10,7 +10,7 @@ export const handleUpdateRideBookingAction = async (data: IRideBooking) => {
     const res = await fetch(`${API_URL}/api/rides`, {
         method: 'PUT',
         headers: {
-            Authentication: `Bearer ${session?.user?.access_token}`
+            Authentication: `Bearer ${session?.access_token}`
         },
         body: JSON.stringify({
             _id: data?._id,
@@ -35,7 +35,7 @@ export const handleDeleteRideBookingAction = async (_id: string) => {
     const res = await fetch(`${API_URL}/api/rides`, {
         method: 'DELETE',
         headers: {
-            Authentication: `Bearer ${session?.user?.access_token}`
+            Authentication: `Bearer ${session?.access_token}`
         },
         body: JSON.stringify({ _id })
     })

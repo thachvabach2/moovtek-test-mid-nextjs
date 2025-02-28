@@ -5,6 +5,7 @@ import { IUser } from "./types/next-auth"
 import { v4 as uuidv4 } from 'uuid';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+    secret: process.env.NEXTAUTH_SECRET,
     providers: [
         Credentials({
             // You can specify which fields should be submitted, by adding keys to the `credentials` object.
@@ -75,12 +76,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         jwt({ token, user }) {
             if (user) { // User is available during sign-in
                 token.user = (user as IUser);
+                token.access_token = (user as IUser).access_token;
             }
             return token
         },
         session({ session, token }) {
             if (token.user) {
                 (session.user as IUser) = token.user
+                session.access_token = token.access_token;
             }
             return session
         },

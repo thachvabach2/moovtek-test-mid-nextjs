@@ -23,7 +23,7 @@ const DashboardPage = async ({ searchParams }: IProps) => {
                         &customerName=${customerName}&status=${status}`, {
                 method: 'GET',
                 headers: {
-                    Authentication: `Bearer ${session?.user?.access_token}`
+                    Authentication: `Bearer ${session?.access_token}`
                 },
                 cache: 'force-cache',
                 next: {

@@ -19,7 +19,7 @@ const DriverManagementPage = async ({ searchParams }: IProps) => {
             await fetch(`${API_URL}/api/drivers?current=${current}&pageSize=${pageSize}`, {
                 method: 'GET',
                 headers: {
-                    Authentication: `Bearer ${session?.user?.access_token}`
+                    Authentication: `Bearer ${session?.access_token}`
                 },
                 cache: 'force-cache',
                 next: {
